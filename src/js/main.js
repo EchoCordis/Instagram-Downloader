@@ -250,10 +250,11 @@ function renderMedias(data) {
     PHOTOS_CONTAINER.replaceChildren()
     data.media.forEach(item => {
         const date = new Date(data.date * 1000).toISOString().split('T')[0]
+        getFilenameFromURL(item.url,item.isVideo)
         const attributes = {
             class: 'photos-item',
             src: item.url,
-            title: `${data.user.fullName} | ${data.user.username} | ${item.id} | ${date}`,
+            title: getFilenameFromURL(item.url,item.isVideo),
             controls: ''
         }
         const ITEM_TEMPLATE =
@@ -407,6 +408,14 @@ function handleEvents() {
     }).observe({ entryTypes: ["resource"] })
     setTheme()
     if (window.location.pathname.startsWith('/direct')) DOWNLOAD_BUTTON.classList.add('hide')
+}
+function getFilenameFromURL(url, isVideo) {
+    splitUrl = url.split(/[/?]/)
+    //console.log(splitUrl)
+    if(isVideo)
+        return splitUrl[8]
+    else
+        return splitUrl[5]
 }
 function main(profileID = '51963237586') {
     document.querySelectorAll('.display-container, .download-button').forEach(node => {
