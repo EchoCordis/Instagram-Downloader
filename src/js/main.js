@@ -411,9 +411,12 @@ function handleEvents() {
 }
 function getFilenameFromURL(url, isVideo) {
     splitUrl = url.split(/[/?]/)
-    //console.log(splitUrl)
-    if(isVideo)
-        return splitUrl[8]
+    console.log(splitUrl)
+    if(isVideo) 
+        if(splitUrl[8] == undefined)
+            return splitUrl[5]
+        else
+            return splitUrl[8]
     else
         return splitUrl[5]
 }
